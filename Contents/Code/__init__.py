@@ -524,7 +524,6 @@ def ivoox_audio(id, title, url):
   track = 'http://www.ivoox.com/descargar-audio_mn_{0}_1.mp3'.format(id)
 
   duration_string = data.xpath('//div[@class="duration"]/text()')[0]
-  duration = durationFromString(duration_string)
 
   oc = ObjectContainer( title2 = title.decode() )
 
@@ -533,7 +532,7 @@ def ivoox_audio(id, title, url):
     title = title,
     summary = summary,
     thumb = thumb,
-    duration = duration
+    duration = Datetime.MillisecondsFromString(duration_string)
   ))
 
   podcast_title = data.xpath('//img[@id="img_relacionados_podcast"]/following-sibling::h1/a/text()')[0]
@@ -635,19 +634,6 @@ def PlayAudio(url):
 def L(string):
   local_string = Locale.LocalString(string)
   return str(local_string).decode()
-
-################################################################################
-def durationFromString(s):
-  MULT = [3600, 60, 1]
-  numbers = [int(i) for i in s.split(":")]
-  seconds = 0
-
-  diff = len(MULT) - len(numbers)
-
-  for index, number in enumerate(numbers):
-    seconds += number * MULT[index+diff]
-
-  return seconds * 1000
 
 ################################################################################
 try:
