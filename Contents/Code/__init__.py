@@ -83,8 +83,6 @@ def Start():
   DirectoryObject.thumb = R(ICON)
   DirectoryObject.art = R(ART)
 
-  Locale.DefaultLocale = Prefs["language"].split("/")[1]
-
   HTTP.CacheTime = CACHE_1HOUR
 
 ################################################################################
@@ -632,6 +630,7 @@ def PlayAudio(url):
 
 ################################################################################
 def L(string):
+  Request.Headers['X-Plex-Language'] = Prefs["language"].split("/")[1]
   local_string = Locale.LocalString(string)
   return str(local_string).decode()
 
